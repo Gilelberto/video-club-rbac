@@ -9,6 +9,7 @@ const JwtKey = "c7f6663f925ce99625563a31b3d33adb";
 
 
 
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const directorsRouter = require('./routes/directors');
@@ -57,6 +58,12 @@ app.use('/movies', moviesRouter);
 app.use('/copies', copiesRouter);
 app.use('/bookings',bookingsRouter);
 app.use('/awaitLists',awaitListsRouter);
+
+
+
+
+
+
 
 
 
