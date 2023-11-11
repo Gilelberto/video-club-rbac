@@ -8,13 +8,15 @@ const schema = mongoose.Schema({
     _type: {
         type:String,
         enum:formatEnum
-    }
+    },
+    _over: String
 });
 
 class Permission {
-    constructor(description, type){
+    constructor(description, type, over){
         this._description = description;
         this._type = type;
+        this._over = over;
     }
 
     get description() { return this._description; } 
@@ -22,6 +24,9 @@ class Permission {
 
     get type() { return this._type; }
     set type(v) { this._type = v; }
+
+    get over() { return this._over; }
+    set over(v) { this._over = v; }
 }
 
 schema.loadClass(Permission);

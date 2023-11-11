@@ -10,6 +10,7 @@ async function createAdminProfile(){
             let createPermission = new Permission({
                 description: "Create a new user",
                 type: "CREATE",
+                over: "all"
             });
 
             await createPermission.save();
@@ -17,26 +18,31 @@ async function createAdminProfile(){
             createPermission = await new Permission({
                 description: "Create a movie",
                 type: "CREATE",
+                over: "all"
             }).save();
 
             createPermission = await new Permission({
                 description: "Create any object",
                 type: "CREATE",
+                over: "all"
             }).save();
 
             const readPermission = await new Permission({
                 description: "Read any object",
                 type: "READ",
+                over: "all"
             }).save();
 
             const updatePermission = await new Permission({
                 description: "Update any object ",
                 type: "UPDATE",
+                over: "all"
             }).save();
 
             const deletePermission = await new Permission({
                 description: "Delete any object ",
                 type: "DELETE",
+                over: "all"
             }).save();
             //creammos el perfil de admin
 
@@ -85,18 +91,21 @@ async function createUserProfile(){
             let readPermission = await new Permission({
                 description: "Read a movie",
                 type: "READ",
+                over: "movies"
             }).save();
             permissions.push(readPermission._id);
         
             readPermission = await new Permission({
                 description: "Read a director",
                 type: "READ",
+                over: "directors"
             }).save();
             permissions.push(readPermission._id);
         
             readPermission = await new Permission({
                 description: "Read an actor",
                 type: "READ",
+                over: "actors"
             }).save();
             permissions.push(readPermission._id);
             
