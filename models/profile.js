@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const permission = require('./permission');
 
 const schema = mongoose.Schema({
+    _type: String,
     _description:String,
     _status:Boolean,
     _permissions: [{
@@ -10,7 +11,8 @@ const schema = mongoose.Schema({
 });
 
 class Profile {
-    constructor(description, status, permissions){
+    constructor(description, status, permissions, type){
+        this._type = type;
         this._description = description;
         this._status = status;
         this._permissions = permissions;
@@ -24,6 +26,9 @@ class Profile {
 
     get permissions() {return this._permissions; }
     set permissions(v) {this._permissions = v; }
+
+    get type() {return this._type; }
+    set type(v) {this._type = v; }
 }
 
 schema.loadClass(Profile);

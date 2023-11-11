@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User  = require('../models/user');
+const config = require('config');
 
 function home (req, res, next) {
     res.render('index', { title: 'Express' }); 
@@ -10,7 +11,7 @@ function home (req, res, next) {
 function login(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
-    const JwtKey = "c7f6663f925ce99625563a31b3d33adb";
+    const JwtKey = config.get("secret.key");
     User.findOne({"_email":email}).then(user => {
         if(user){
             bcrypt.hash(password, user.salt, (err, hash) => {
@@ -23,7 +24,7 @@ function login(req, res, next) {
                 if(hash === user.password){
                     res.status(200).json({
                         message: "Login Ok",
-                        obj: jwt.sign({data:user.data, exp:Math.floor(Date.now()/1000) + 60}, JwtKey)
+                        obj: jwt.sign({data:user.data, exp:Math.floor(Date.now()/1000) + 1000}, JwtKey)
                     });
                 } else {
                     res.status(403).json({

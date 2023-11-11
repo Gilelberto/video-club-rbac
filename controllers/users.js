@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const {createAdminProfile,createUserProfile} = require('../models/utils/definePermissions');
 
 async function create(req, res, next){
     const name = req.body.name;
@@ -8,11 +9,20 @@ async function create(req, res, next){
     const email = req.body.email;
     const password = req.body.password;
     let salt = await bcrypt.genSalt(10);
+    let profile = req.body.profile;
+    let profileId;
+    if(profile == 'admin'){
+        profileId = await createAdminProfile();
+    }
+    if(profile == 'user'){
+        console.log('USER');
+        profileId = await createUserProfile();
+    }
 
     const passwordHash = await bcrypt.hash(password, salt);
 
     let user = new User({
-        name:name, lastName:lastName, email:email, password:passwordHash, salt:salt
+        name:name, lastName:lastName, email:email, password:passwordHash, salt:salt, profiles:[profileId]
     }); 
     user.save().then(obj => res.status(200).json({
         message:"Usuario creado correctamente", 

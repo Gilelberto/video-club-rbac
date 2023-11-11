@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const {expressjwt} = require('express-jwt');
-const JwtKey = "c7f6663f925ce99625563a31b3d33adb";
+const config = require('config');
+
+const JwtKey = config.get("secret.key");
 
 
 
@@ -23,7 +25,7 @@ const awaitListsRouter = require('./routes/awaitLists');
 
 const app = express();
 //mongodb://<dbUser>?:<dbPass>?@<url>:<port>/<dbName>
-const url = "mongodb://localhost:27017/mongodb"
+const url = config.dbChain;
 mongoose.connect(url);
 
 const db = mongoose.connection;
@@ -45,7 +47,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(expressjwt({secret:JwtKey,algorithms:['HS256']}).unless({path:['/login']})); 
+//app.use(expressjwt({secret:JwtKey,algorithms:['HS256']}).unless({path:['/login','/users']}));  
 
 
 app.use('/', indexRouter);

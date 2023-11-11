@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-import adminAbilities from '../abilities/adminAbilities';
+//import adminAbilities from '../abilities/adminAbilities';
 
 const schema = mongoose.Schema({
     _name:String,

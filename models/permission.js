@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-import adminAbilities from '../abilities/adminAbilities';
+//import adminAbilities from '../abilities/adminAbilities';
 
 const formatEnum = ['READ', 'CREATE', 'UPDATE', 'DELETE'];
 
