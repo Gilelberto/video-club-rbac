@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User  = require('../models/user');
 const config = require('config');
+const { response } = require('../app');
 
 function home (req, res, next) {
     res.render('index', { title: 'Express' }); 
@@ -17,30 +18,30 @@ function login(req, res, next) {
             bcrypt.hash(password, user.salt, (err, hash) => {
                 if(err){
                     res.status(403).json({
-                        message: "Usuario y/o contraseña incorretos",
+                        message: res.__("login.wrong"), //__ es una variable de entorno
                         obj:err
                     });
                 }
                 if(hash === user.password){
                     res.status(200).json({
-                        message: "Login Ok",
+                        message: res.__("login.ok"),
                         obj: jwt.sign({data:user.data, exp:Math.floor(Date.now()/1000) + 1000}, JwtKey)
                     });
                 } else {
                     res.status(403).json({
-                        message: "Usuario y/o contraseña incorretos",
+                        message: res.__("login.wrong"),
                         obj:null
                     }); 
                 }
             });
         } else {
             res.status(403).json({
-                message: "Usuario y/o contraseña incorretos",
+                message: res.__("login.wrong"),
                 obj:null
             });
         }
     }).catch(ex => res.status(403).json({
-        message: "Usuario y/o contraseña incorretos",
+        message: res.__("login.wrong"),
         obj:ex
     }));
 }
